@@ -77,3 +77,74 @@ esCapicua n| n<10 = True
            | primerDigitoN n == ultimoDigitoN n = esCapicua num
            | otherwise = False
            where num = sacarUltimoDigito (sacarPrimerDigito n)
+
+
+
+--ej10 a)
+
+{-
+problema f1(x:N+{0}):N{
+    requiere:{x>=0}
+    asegura:{res [2^(i+1)]-1}
+}
+-}
+
+f1::Integer->Integer
+f1 n|n>=0 && n<1 = 1
+    |n>=1 = 2^n+f1 (n-1)
+
+--ej10 b)
+
+{-
+problema f1(x:N+{0}):N{
+    requiere:{x>=0}
+    asegura:{res [2^(i+1)]-1}
+}
+-}
+
+f2::Integer->Float->Float
+f2 n q|n==1 = q
+      |n>1 = q^n+f2 (n-1) q
+
+--ej10 c)
+
+f3::Integer->Float->Float
+f3 n q|n==0 = 0
+      |n>=1 = f2 (2*n) q
+
+--ej10 d)
+
+f4::Integer->Float->Float
+f4 n q|n==0 = 1
+      |n>=1 = f2 (2*n) q - f2 (n-1) q 
+
+
+--ej13
+
+{-problema dobleSumaDePotencias(n,m:Z):Z{
+    requiere:{n>=1}
+    requiere:{m>=1}
+    asegura:{res= *sumatorias*}
+
+-}
+sumatoria::Integer->Integer->Integer
+sumatoria j i|j==1 = i
+             |j>1 = i^j+ sumatoria (j-1) i
+
+dobleSumaDePotencias:: Integer->Integer->Integer
+dobleSumaDePotencias n m|n==0 = 0
+                        |n>=1 && m>=1 = sumatoria m n + dobleSumaDePotencias (n-1) m
+
+
+--ej16 a)
+{-mplementar menorDivisor :: Integer ->Integer que calcule el menor divisor (mayor que 1) de un natural n pasado
+como par´ametro-}
+menorDivisorDesde::Int->Int->Int
+menorDivisorDesde d n| mod n d ==0 = d
+                     | otherwise = menorDivisorDesde(d+1) n
+
+
+menorDivisor :: Int ->Int
+menorDivisor n = menorDivisorDesde 2 n
+
+
