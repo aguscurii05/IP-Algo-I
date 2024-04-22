@@ -118,6 +118,7 @@ f4::Integer->Float->Float
 f4 n q|n==0 = 1
       |n>=1 = f2 (2*n) q - f2 (n-1) q 
 
+<<<<<<< HEAD
 --ej11 a) & b)
 
 factorial::Float->Float
@@ -129,6 +130,9 @@ eAprox::Integer->Float
 eAprox 0=1
 eAprox n= 1/factorial (fromIntegral n) + eAprox (n-1)
 
+e::Float
+e= eAprox 10
+
 --ej12
 
 sucesion12::Float->Float
@@ -138,10 +142,9 @@ sucesion12 n= 2 + (1/sucesion12 (n-1))
 raizDe2Aprox::Integer->Float
 raizDe2Aprox n= sucesion12 (fromIntegral n) -1
 
-
 --ej13
-e::Float
-e= eAprox 10
+
+>>>>>>> a1ac615faf880e7203db762063eba4284cd07ac0
 {-problema dobleSumaDePotencias(n,m:Z):Z{
     requiere:{n>=1}
     requiere:{m>=1}
