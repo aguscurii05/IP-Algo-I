@@ -1,4 +1,5 @@
 import Data.Binary.Get (Decoder(Fail))
+import Data.Maybe (fromJust)
 --ej5
 
 medioFact :: Integer ->Integer
@@ -118,7 +119,6 @@ f4::Integer->Float->Float
 f4 n q|n==0 = 1
       |n>=1 = f2 (2*n) q - f2 (n-1) q 
 
-<<<<<<< HEAD
 --ej11 a) & b)
 
 factorial::Float->Float
@@ -144,7 +144,6 @@ raizDe2Aprox n= sucesion12 (fromIntegral n) -1
 
 --ej13
 
->>>>>>> a1ac615faf880e7203db762063eba4284cd07ac0
 {-problema dobleSumaDePotencias(n,m:Z):Z{
     requiere:{n>=1}
     requiere:{m>=1}
@@ -159,16 +158,149 @@ dobleSumaDePotencias:: Integer->Integer->Integer
 dobleSumaDePotencias n m|n==0 = 0
                         |n>=1 && m>=1 = sumatoria m n + dobleSumaDePotencias (n-1) m
 
+--ej14
 
+sumaPotencias :: Integer ->Integer ->Integer ->Integer
+sumaPotencias q 0 0 = 0
+sumaPotencias q 0 m = q^m
+sumaPotencias q n 0 = q^n
+sumaPotencias q n m = q^(n+m) + sumaPotencias q (n-1) (m-1)
+
+--ej15
+
+sumatoriaPQ1::Integer->Integer->Float
+sumatoriaPQ1 p 1= fromIntegral p
+sumatoriaPQ1 p q= fromIntegral p/fromIntegral q + sumatoriaPQ1 p (q-1)
+
+sumatoriaPQ2::Integer->Integer->Float
+sumatoriaPQ2 1 q= sumatoriaPQ1 1 q
+sumatoriaPQ2 p q= sumatoriaPQ1 p q + sumatoriaPQ2 (p-1) q
 --ej16 a)
 {-mplementar menorDivisor :: Integer ->Integer que calcule el menor divisor (mayor que 1) de un natural n pasado
 como par´ametro-}
-menorDivisorDesde::Int->Int->Int
+menorDivisorDesde::Integer->Integer->Integer
 menorDivisorDesde d n| mod n d ==0 = d
                      | otherwise = menorDivisorDesde(d+1) n
 
 
-menorDivisor :: Int ->Int
+menorDivisor :: Integer ->Integer
 menorDivisor n = menorDivisorDesde 2 n
 
+--ej16 b) 
 
+esPrimo:: Integer->Bool
+esPrimo n= (menorDivisor n)== n
+
+listaPrimos::Integer->[Integer]
+listaPrimos n| n==1 = []
+             | esPrimo n==True = (n:(listaPrimos (n-1)))
+             | otherwise = listaPrimos (n-1)
+
+--ej16 c)
+
+divisible::Integer->Integer->Bool
+divisible a b= mod a b == 0
+sonCoprimos::Integer->Integer->Bool
+sonCoprimos 1 _ = False
+sonCoprimos _ 1 = False
+sonCoprimos a b= not(divisible a b) && not(divisible b a)
+
+
+primoN::Integer->Integer->Integer
+primoN a n| n==0 = a-1
+          |esPrimo a = primoN (a+1) (n-1)
+          |otherwise = primoN (a+1) n
+
+nEsimoPrimo :: Integer ->Integer
+nEsimoPrimo 1=2
+nEsimoPrimo n= primoN 2 n
+
+--ej17
+
+fibonacci::Integer->Integer
+fibonacci n| n==0 =0
+           |n==1 =1
+           | n>0 = fibonacci(n-1)+fibonacci(n-2)
+
+esFibo::Integer->Integer->Bool
+esFibo a n |fibonacci a > n = False
+esFibo a n | otherwise =fibonacci a == n || esFibo (a+1) n
+
+esFibonacci :: Integer ->Bool
+esFibonacci n= esFibo 0 n
+
+--ej18
+{- esPar::Integer->Bool
+esPar n= mod n 2==0
+
+esMDP :: Integer ->Integer->Bool
+esMDP n a | esPar n && esPar a && a<10 && mod a 10<mod n 10 = True
+                   | esPar n && esPar a && a<10 && mod a 10>mod n 10 = False
+                   | esPar n && esPar a && (mod n 10)> mod a 10 = esMDP n (div a 10)
+                   | esPar n && esPar a==False = esMDP n (div a 10)
+                   | otherwise = False
+
+mayorDigitoPar::Integer->Integer
+mayorDigitoPar n| n<10 && esPar n ==False= -1
+                | esMDP n (div n 10) = n
+                | otherwise = mayorDigitoPar (div n 10)
+-}
+
+--ej19
+
+sumaMPrimos::Integer->Integer
+sumaMPrimos 1 = 2
+sumaMPrimos m = nEsimoPrimo m + sumaMPrimos (m-1)
+
+esSIDP::Integer->Integer->Bool
+esSIDP n a | n< sumaMPrimos a = False
+esSIDP n a | n== sumaMPrimos a = True
+esSIDP n a | otherwise =esSIDP n (a+1)
+esSumaInicialDePrimos :: Integer ->Bool 
+esSumaInicialDePrimos n = esSIDP n 1
+
+--ej20
+
+esDivisible::Int->Int->Int
+esDivisible n a | a==n = n
+                | (mod n a) ==0 = a + esDivisible n (a+1)
+                | otherwise = esDivisible n (a+1)
+
+
+sumaDivisores::Int->Int
+sumaDivisores n= esDivisible n 1
+
+comparar::Int->Int->Bool
+comparar a b | sumaDivisores a == sumaDivisores b && a==b = True
+             | sumaDivisores a > sumaDivisores b = comparar a (b-1)
+             | otherwise = False
+
+
+tomaValorMax :: Int ->Int ->Int
+tomaValorMax n1 n2 | n1==n2 = n1 
+                   | n1>=1 && n2>=n1 && comparar n1 n2 = n1
+                   | otherwise = tomaValorMax (n1+1) n2
+
+--ej21
+{-
+problema pitagoras (m,n,r:R):R{
+    requiere:{m,n,r >=0}
+    asegura:{res = cuantos (p,q): 0<=p<=m y 0<=q<=n cumplen subPitagoras}
+
+problema subPitagoras (m,n,r:R):Bool{
+    requiere: {True}
+    asegura: {res=True si p^2+q^2<=r^2}
+}
+}
+-}
+
+subPitagoras::Integer->Integer->Integer->Bool
+subPitagoras p q r= ((p^2)+(q^2)) <= (r^2)
+
+cumplenSP::Integer->Integer->Integer->Integer
+cumplenSP m n r| m==(-1) = 0
+               | subPitagoras m n r = 1 + cumplenSP (m-1) n r
+               | otherwise = cumplenSP (m-1) n r
+pitagoras :: Integer ->Integer ->Integer->Integer
+pitagoras m (-1) r = 0
+pitagoras m n r = cumplenSP m n r + pitagoras m (n-1) r
