@@ -61,4 +61,8 @@ quitarTodos :: (Eq t ) => t -> [t] -> [t]
 quitarTodos a (x:xs) | not(pertenece a (x:xs))= (x:xs)
                      | otherwise = quitarTodos a (quitar a (x:xs))
 
+--ej2.7
 
+elementoRepetido::(Eq t)=>t->[t]->Bool
+elementoRepetido a [x] = False
+elementoRepetido a (x:xs) = (pertenece a [x] && pertenece a xs) || elementoRepetido a xs
