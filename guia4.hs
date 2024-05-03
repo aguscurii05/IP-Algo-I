@@ -1,5 +1,41 @@
-import Data.Binary.Get (Decoder(Fail))
-import Data.Maybe (fromJust)
+--ej1
+
+fibonacci'::Integer->Integer
+--fibonacci 0 = 0
+--fibonacci 1 = 1
+--fibonacci n = fibonacci(n-1)+fibonacci(n-2)
+fibonacci' n| n==0 =0
+           |n==1 =1
+           | n>0 = fibonacci'(n-1)+fibonacci'(n-2)
+
+--ej2
+
+--problema parteEntera (x: R) : Z {
+--requiere: { T rue }
+--asegura: { resultado ≤ x < resultado + 1 }
+--}
+
+
+parteEntera :: Float ->Integer
+parteEntera n| n>=0 && n<1 = 0
+             | n<0 = parteEntera (n+1)-1 
+             | otherwise = parteEntera(n-1)+1
+
+
+--ej3
+
+esDivisible' :: Integer ->Integer ->Bool
+esDivisible' a b|a<0 || b<0 = False --a b naturales
+               |a-b==0 = True --cb1
+               | a-b<0 = False --cb2
+               | a-b>0 = esDivisible' (a-b) b --recurs.
+
+--ej4
+
+sumaImpares :: Integer ->Integer
+sumaImpares 1 = 1
+sumaImpares n= sumaImpares (n-1) + (2*n-1)
+
 --ej5
 
 medioFact :: Integer ->Integer
