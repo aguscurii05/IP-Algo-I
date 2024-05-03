@@ -241,3 +241,65 @@ palabraMasLarga :: [Char] -> [Char]
 palabraMasLarga oracion | palabras oracion == [] = []
 palabraMasLarga oracion = palabraMasLarga2 (head (palabras oracion)) (palabras oracion)
 
+--ej4e)
+
+aplanar :: [[Char]] -> [Char]
+aplanar [] = []
+aplanar [x] = x
+aplanar (x:xs) = x++aplanar xs
+
+--ej4f)
+
+aplanarConBlancos :: [[Char]] -> [Char]
+aplanarConBlancos []=[]
+aplanarConBlancos [x] = x
+aplanarConBlancos (x:xs)= x++" "++aplanarConBlancos xs
+
+--ej4g)
+
+insertarBlanco::[Char]->[Char]
+insertarBlanco pal = pal++" "
+
+insertarNBlancos::Integer->[Char]->[Char]
+insertarNBlancos 0 pal = pal
+insertarNBlancos n pal = insertarNBlancos (n-1) (insertarBlanco pal) 
+
+aplanarConNBlancos :: Integer->[[Char]] -> [Char]
+aplanarConNBlancos _ []=[]
+aplanarConNBlancos n [x] = x
+aplanarConNBlancos n (x:xs)= insertarNBlancos n x++aplanarConNBlancos n xs
+
+--ej5.1
+
+nElemento::(Num t)=>[t]->Integer->t
+nElemento (x:xs) 1= x
+nElemento (x:xs) n= nElemento xs (n-1)
+
+
+sumatoria2::(Num t)=>Integer->[t]->t
+sumatoria2 _ [] = 0
+sumatoria2 0 _= 0
+sumatoria2 n list= (nElemento list n) + (sumatoria2 (n-1) list)
+
+--uso la funcion longitud ya definida
+
+subSumaAcumulada :: (Num t) => [t] -> [t]
+subSumaAcumulada [x] = [x]
+subSumaAcumulada list =  (sumatoria2 (longitud list) list: subSumaAcumulada (principio list))
+
+sumaAcumulada:: (Num t) => [t] -> [t]
+sumaAcumulada [] = []
+sumaAcumulada list = reverso (subSumaAcumulada list)
+
+--ej5.2
+
+prodPrimos::Integer->Integer->[Integer]
+prodPrimos a b| a==b = [a]
+              | mod a b == 0 = [b]++prodPrimos (div a b) b
+              | mod a b /= 0 = prodPrimos a (b+1)
+
+descomponerEnPrimos :: [Integer] -> [[Integer]]
+descomponerEnPrimos [x] = [prodPrimos x 2]
+descomponerEnPrimos (x:xs) = (prodPrimos x 2):(descomponerEnPrimos xs)
+
+

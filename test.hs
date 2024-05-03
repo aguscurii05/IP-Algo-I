@@ -23,5 +23,7 @@ prodPrimosTesting = test [
 
 descomponerEnPrimosTesting = test [
   "caso1" ~: (descomponerEnPrimos  [2, 10, 6]) ~?= [[2], [2, 5], [2, 3]],
-  "caso2" ~: (descomponerEnPrimos  [7,8,2,12]) ~?= [[7],[2,2,2],[2],[2,2,3]]
+  "caso2" ~: (descomponerEnPrimos  [7,8,2,12]) ~?= [[7],[2,2,2],[2],[2,2,3]],
+  "caso3" ~: (descomponerEnPrimos  []) ~?= [[]],
+  "caso4" ~: (descomponerEnPrimos  [144]) ~?= [[2,2,2,2,3,3]]
     ]
