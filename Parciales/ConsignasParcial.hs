@@ -18,7 +18,8 @@ problema desplazar (a: Char, n: Z) : Char {
 requiere: {-25 <= n <= 25} 
 asegura: {ord a >= ord 'a' ∧ ord a <= ord 'z' ∧ 0 <= n <= 25 → res es el caracter que se encuentra a n posiciones más adelante en el alfabeto (si se llega al final se comienza desde el principio)} 
 asegura: {ord a >= ord 'a' ∧ ord a <= ord 'z' ∧ -25 <= n < 0 → res es el caracter que se encuentra a n posiciones más atrás en el alfabeto (si se llega al principio se comienza desde el final)} 
-asegura: {¬ (ord a >= ord 'a' ∧ ord a <= ord 'z') → res = a } Ejemplos: desplazar 'b' 2 devuelve 'd' desplazar 'b' -1 devuelve 'a' desplazar 'x' 4 devuelve 'b' desplazar 'b' -3 devuelve 'y' desplazar ';' 2 devuelve ';'
+asegura: {¬ (ord a >= ord 'a' ∧ ord a <= ord 'z') → res = a } 
+Ejemplos: desplazar 'b' 2 devuelve 'd' desplazar 'b' -1 devuelve 'a' desplazar 'x' 4 devuelve 'b' desplazar 'b' -3 devuelve 'y' desplazar ';' 2 devuelve ';'
 
 4) Codificar mensaje [2 puntos] 
 
