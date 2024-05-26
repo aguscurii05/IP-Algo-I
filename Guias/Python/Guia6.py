@@ -238,7 +238,7 @@ def vacaciones_o_trabajo(sexo:str,edad:int)->str:
         print("anda de vacaciones")
     else:
         print("anda a trabajar")
-"""
+        
 #Ej 6.1
 
 def num1_10():
@@ -280,4 +280,104 @@ print(a)
 
 #Ej 6.5
 
-"""
+def viaje_en_el_tiempo(año_partida:int,año_llegada:int)->str:
+    año:int=año_partida-1
+    while año>=año_llegada:
+        print("Viajó un año al pasado, estamos en el año: " + str(año))
+        año=año-1
+
+#Ej 6.6
+
+def viaje_aristoteles(año_partida:int)->str:
+    año:int=año_partida-20
+    
+    while año>-384:
+        
+        if año>0:
+            print("Viajó 20 años al pasado, estamos en el año: " + str(año) + "D.C")
+            año=año-20 
+        else:
+            #compara la distancia al -384 entre el año, y viajar en el tiempo 20 años mas
+            #si la distancia es mayor a la de viajar, entonces sigue viajando
+            #si la distancia es menor significa que ya se esta lo suficientemente cerca de 
+            #aristoteles, por ende resta 20 asi termina el while
+            if math.fabs(-384-año)>math.fabs(-384-año+20): 
+                año=año-20 
+                print("Viajó 20 años al pasado, estamos en el año: " + str(año) + "A.C")
+            else:
+                año=año-20
+            
+       
+    print("conociste a aristoteles")
+viaje_aristoteles(-384)      
+
+#Ej 7.1
+
+def uno_a_diez():
+    for i in range(1,11,1):
+        print(i)
+        
+#Ej 7.2
+
+def pares():
+    for i in range(10,42,2):
+        print(i)
+
+#Ej 7.3
+
+def eco2():
+    for i in range(1,11,1):
+        print("eco")
+
+#Ej 7.4
+
+def cuenta_regresiva2(num:int):
+    for i in range (num,0,-1):
+        print(i)
+    print("Despegamos topu")
+    
+#Ej 7.5
+
+def viaje_en_el_tiempo2(año_partida:int,año_llegada:int):
+    for i in range(año_partida,año_llegada-1,-1):
+      print("Viajó un año al pasado, estamos en el año: " + str(i))
+      
+#Ej 7.6
+
+def viaje_aristoteles2(año_partida:int)->str:
+    for i in range(año_partida,-385,-20):
+        a:int=i
+        if math.fabs(-384-a)>math.fabs(-384-a+20): 
+            print("Viajó 20 años al pasado, estamos en el año: " + str(i-20) + "A.C")
+        else:
+            print("Viajó 20 años al pasado, estamos en el año: " + str(i) + "A.C")
+        
+viaje_aristoteles2(6)
+
+#Ej 9.1 
+#primera eval. g=1 devuelve 2
+#segunda eval. g=2 devuelve 3
+#tercera eval. g=3 devuelve 4
+
+#Ej 9.2
+#primera eval. g=1 devuelve 2
+#segunda eval. g=2 devuelve 3
+#tercera eval. g=3 devuelve 4
+
+def rt(x: int, g: int) -> int:
+    g = g + 1
+    return x + g
+
+g: int = 0
+def ro(x: int) -> int:
+    global g
+    g = g + 1
+    return x + g
+
+#Ej 9.4
+
+#problema rt(x:Z,g,Z):Z{
+#    requiere:{True}
+#    asegura:{res es igual a la suma entre x y el siguiente de g}
+#}
+
