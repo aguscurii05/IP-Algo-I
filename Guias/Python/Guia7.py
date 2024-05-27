@@ -298,12 +298,43 @@ def es_matriz(s:list[list[int]])->bool:
     res:bool= len(s)>0 and len(s[0])>0 and sub_res
     return res
 
+#Ej 5.4
+
 def filas_ordenadas(s:list[list[int]])->list[bool]:
     res:bool=True
     for i in s:
         res= res and ordenados(i)
     return res
-#print(filas_ordenadas([[2,3,4],[1,2,3],[7,8,9],[100,101,102]]))
-#print(filas_ordenadas([[2,3,4],[3,2,6],[7,8,9],[100,101,102]]))
+
+#Ej 5.5
+
+import numpy as np
+
+def elevar_matriz(m1:list[list[int]],m2:list[list[int]])->list[list[int]]:
+    res:list[list[int]]=[]
+    
+    for i in range(0,len(m1),1):
+        fila:list[int]=[]
+        for j in range(0,len(m1[i]),1):
+            elem:int=0
+            for k in range(0,len(m1),1):
+                elem=elem + m1[i][k]*m2[k][j]
+            fila.append(elem)
+        res.append(fila)
+    return res
+
+def elevar_matriz_a_n(d:int,n:int)->list[list[int]]:
+    m:list[list[int]]=np.random.randint(0,9, (d, d))
+    res:list[list[int]]=m
+    for i in range (1,n,1):
+        res = elevar_matriz(res,m)
+    print(m)
+    print(res)
+
+elevar_matriz_a_n(3,2)
+   
+  
+
+
 
 
