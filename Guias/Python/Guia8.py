@@ -206,7 +206,83 @@ def cantidad_elem_pila(p:Pila)->int:
         p.put(pila_list[i])
     return res
 
-#def buscar_el_maximo(p:Pila[int])->int:
+#Ej 10
+
+def buscar_el_maximo(p:Pila[int])->int:
+    pila_list:list=[]
+    while p.empty()==False:
+        elem = p.get()
+        pila_list:list= pila_list + [elem]
+    res:int=0
+    for i in range(len(pila_list)-1,-1,-1):
+        if res>=pila_list[i]:
+            res = res
+        else:
+            res=pila_list[i]
+        p.put(pila_list[i])
+    return res
+    
+#Ej 11
+"""
+def esta_bien_balanceada(s:str)->bool:
+    c:str=''
+    for i in range(0,len(s),1):
+        if s[i]!=' ':
+            c = c+s[i]
+    cont:int=0
+    cont2:int=0
+
+    print(c)
+    op:list[str]=['+','-','*','/']
+    for i in range(0,len(s),1):
+        if c[i] in op:
+            if (c[i-1] in op+['()']) or (c[i-1] in op+['()'])
+        
+    if cont==0:
+        res:bool=True
+    else:
+        res:bool=False
+    return res
+
+print(esta_bien_balanceada("4+6-7+/5"))
+ """
+ 
+#Ej 12
+
+def calc(num1,op,num2):
+    if op=='+':
+        res= num1+num2
+    if op=='-':
+        res= num2-num1
+    if op=='*':
+        res= num1*num2
+    if op=='/':
+        res= num2/num1
+    return res
+
+def evaluar_expr(s:str)->float:
+    c:list[str]=[]
+    op:list[str]=['+','-','*','/']
+    i:int=0
+    while i<len(s):
+        if s[i]!=' ':
+            if i!=len(s)-1 and s[i+1]!=' ':
+                c=c+[s[i]+s[i+1]]
+                i+=1
+            else:
+                c=c+[s[i]]
+        i+=1
+    pila=Pila()
+    for i in range(0,len(c),1):
+        if not(c[i] in op):
+            pila.put(c[i])
+        if c[i] in op:
+            num1=pila.get()
+            num2=pila.get()
+            pila.put(calc(float(num1),c[i],float(num2))) 
+    return pila.get()
+
+
 
 from queue import Queue as Cola
 
@@ -288,3 +364,36 @@ def jugar_carton_bingo(carton:list[int],bolillero:list[int])->int:
         if subcond==3:
             cond=False   
     return i 
+
+#Ej 19 
+
+def archivo_a_palabras(archivo:str)->list[str]:
+    file = open(archivo,'r')
+    file = file.readlines()
+    res:list[str]=[]
+    for i in range(0,len(file),1):
+        pal:list[chr]=""
+        for j in range(0,len(file[i]),1):
+            if file[i][j]!=' ' and file[i][j]!='\n':
+                pal+=file[i][j]
+            elif file[i][j]=='\n' or file[i][j]==' ':
+                res=res+[pal]
+                pal=""
+    res=res+[pal]
+    return res
+
+def agrupar_por_long(archivo:str)->dict:
+    palabras = archivo_a_palabras(archivo)
+    res:dict[int,int]= {}
+    for i in range(0,len(palabras),1):
+        clave:int= len(palabras[i])
+        if clave in res:
+            res[clave]+=1
+        else:
+            res[clave]=1
+    return res
+            
+print(agrupar_por_long("ej19.txt"))
+        
+        
+    
