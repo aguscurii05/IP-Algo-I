@@ -1,6 +1,6 @@
 #Ej 1.1
 
-def contar_lineas(list:list[chr])->int:
+def contar_lineas(list:str)->int:
     a:int=1
     for i in list:
         if '\n' in i:
@@ -9,7 +9,7 @@ def contar_lineas(list:list[chr])->int:
 
 #Ej 1.2
 
-def existe_letra(letra:chr,file:str)->list[int]:
+def existe_letra(letra:str,file:str)->list[int]:
     res=[]
     i:int=0
     while 0<=i<len(file):
@@ -180,7 +180,7 @@ def calcular_promedio_por_estudiante(notas:str,promedios:str):
         promedios.writelines(lista_LU[j]+','+promedio_estudiante(notas,lista_LU[j])+"\n") #escribo una linea que tenga la LU y su promedio
     promedios.close()
 
-calcular_promedio_por_estudiante("notas.csv","promedios")
+#calcular_promedio_por_estudiante("notas.csv","promedios")
 
 import random
 from queue import LifoQueue as Pila
@@ -329,7 +329,7 @@ def buscar_el_max2(p:Cola)->int:
 
 def armar_secuencia_bingo()->Cola[int]:
     nums:list[int]=[]
-    for i in range(0,10,1):
+    for i in range(0,100,1):
         nums = nums + [i]
     cola_nums:Cola[int]=Cola()
     while len(nums)>0:
@@ -338,32 +338,104 @@ def armar_secuencia_bingo()->Cola[int]:
         nums.pop(i)
     return cola_nums
 
-
-def pertenece(elem:int,list:list[int])->bool:
-    i:int=0
-    res:bool=False
-    while i<len(list):
-        if elem==list[i]:
-            res=res or True
-            i=len(list)
-        else:
-            i+=1
-    return res
+#Ej 16.2
 
 def jugar_carton_bingo(carton:list[int],bolillero:list[int])->int:
     bolillero_list:list[int]=[]
-    for i in range(0,10,1):
-        bolillero_list = bolillero_list + [bolillero.get()]
-    cond:bool=True
-    subcond:int=0
+    while bolillero.empty()==False:
+        bolillero_list.append(bolillero.get())
+    copia_carton= carton.copy()
+    cont:int=0
+    res:int=0
     i:int=0
-    while cond==True:
-        if pertenece(bolillero_list[i],carton):
-            subcond+=1
+    while i<len(bolillero_list):
+        if bolillero_list[i] in copia_carton:
+            cont+=1
+        if len(copia_carton)==cont:
+            i=len(bolillero_list)
+        res+=1
         i+=1
-        if subcond==3:
-            cond=False   
-    return i 
+    for i in bolillero_list:
+        bolillero.put(i)
+    return res
+
+#Ej 17
+
+#Generador de Colas
+"""
+nombres = ["pepe","roco","juan","marcos"]
+especialidad = ["clinico","alergista","cirugia","neurologia"]
+lista_pacientes= Cola()
+for i in range(0,10,1):
+    tupla=(random.randint(1,10),nombres[random.randint(0,3)],especialidad[random.randint(0,3)])
+    lista_pacientes.put(tupla)
+"""
+
+def n_pacientes_urgentes(c: Cola[(int, str, str)]):
+    pacientes:list[(int,str,str)]=[]
+    while c.empty()==False:
+        pacientes.append(c.get())
+    res:int=0
+    for p in pacientes:
+        if p[0] in [1,2,3]:
+            res+=1
+    for i in pacientes:
+        c.put(i)
+    return res
+        
+#print(n_pacientes_urgentes(lista_pacientes))
+
+#Ej 18
+
+#ESPECIFICACION
+#problema atencion_a_clientes(in c:: Cola[(str, int, bool, bool)]) → Cola[(str, int, bool, bool)]){
+#    requiere:{Las tuplas en la cola tengan la estrucutura (nombre,dni,tipo_cuenta,prioridad)}
+#    requiere:{DNIdebe ser un valor entre 0 y 100 millones}
+#    asegura:{res contendra a todos los elementos de cola}
+#    asegura:{res tendra a todas las tuplas con prioridad=True en el orden en el que son sacadas,luego
+#             de los restantes a los que tengan tipo_de_cuenta=True en el orden en el que son sacadas y
+#             luego al resto en el orden en que son sacados}
+#    }
+
+
+#Generador de Colas
+booleano=[True,False]
+nombres=["agus","cami","valen","lamia","ricardo","martin","yamila","veronica"]
+lista_clientes=Cola()
+
+"""
+for i in range(0,10,1):
+    tupla =(nombres[random.randint(0,7)],random.randint(0,100000000),
+            booleano[random.randint(0,1)],booleano[random.randint(0,1)])
+    lista_clientes.put(tupla)
+
+print(lista_clientes.queue)
+"""
+
+
+def atencion_a_clientes(c:Cola[(str,int,bool,bool)])->Cola[(str,int,bool,bool)]:
+    clientes:list[(str,int,bool,bool)]=[]
+    while c.empty()==False:
+        clientes.append(c.get())
+    prioridad:list[(str,int,bool,bool)]=[]
+    preferencial:list[(str,int,bool,bool)]=[]
+    resto:list[(str,int,bool,bool)]=[]
+    for cliente in clientes:
+        if cliente[3]==True:
+            prioridad.append(cliente)
+        elif cliente[2]==True:
+            preferencial.append(cliente)
+        else:
+            resto.append(cliente)
+    subres:list[(str,int,bool,bool)]=prioridad+preferencial+resto
+    res:Cola[(str,int,bool,bool)]=Cola()
+    for cliente in subres:
+        res.put(cliente)
+    for i in clientes:
+        c.put(i)
+    return res
+    
+#print(atencion_a_clientes(lista_clientes).queue)
 
 #Ej 19 
 
@@ -392,8 +464,80 @@ def agrupar_por_long(archivo:str)->dict:
         else:
             res[clave]=1
     return res
+
+#Ej 20           
+       
+def calcular_promedio_por_estudiante2(notas:str)->dict[str,float]:
+    
+    lista:list[list[str]]=csv_a_lista(notas)
+    lista_LU:list[str]=[]
+    
+    for i in range(0,len(lista),1): #creo un for que recorra todas las LU del archivo notas
+        if not(lista[i][0] in lista_LU):
+            lista_LU=lista_LU+[lista[i][0]] #si la LU no fue agregada, se agrega, para evitar repeticiones
             
-print(agrupar_por_long("ej19.txt"))
+    promedios = {}
+    for j in range(0,len(lista_LU),1):
+        promedios[lista_LU[j]]=promedio_estudiante(notas,lista_LU[j])
+    return promedios
+
+#Ej 21 
+
+def palabra_mas_frecuente(archivo:str)->str:
+    palabras:list[str] = archivo_a_palabras(archivo)
+    dict_cant:dict[str,float]={}
+    for pal in palabras:
+        if pal not in dict_cant:
+            dict_cant[pal]=1
+        else:
+            dict_cant[pal]+=1
+    keys:list[str]=list(dict_cant.keys())
+    while len(keys)>1:
+        if dict_cant[keys[0]]>=dict_cant[keys[1]]:
+            keys.pop(1)
+        else:
+            keys.pop(0)
+    return keys[0]
+
+#Ej 22
+historiales = {}
+
+def visitar_sitio(historiales:dict[str, Pila[str]],usuario:str,sitio:str):
+    if usuario in historiales:
+        historiales[usuario].put(sitio)
+    else:
+        historiales[usuario] = Pila()
+        historiales[usuario].put(sitio)
+    print("Estas en " + sitio)
         
-        
+def navegar_atras(historiales:dict[str, Pila[str]],usuario:str):
+    actual = historiales[usuario].get()
+    anterior = historiales[usuario].get()
+    print("Estas en " + actual + " vas a volver a " + anterior) 
+    historiales[usuario].put(anterior)
+
+#Ej 23
+inventario:dict[dict]={}
+def agregar_producto(inventario:dict[dict],nombre:str,precio:float,cantidad:int):
+    inventario[nombre]={}
+    inventario[nombre]['precio'] = precio
+    inventario[nombre]['cantidad'] = cantidad
+def actualizar_stock(inventario:dict[dict],nombre:str,cantidad:int):
+    inventario[nombre]['cantidad'] = cantidad
+
+def actualizar_precios(inventario:dict[dict],nombre:str,precio:float):
+    inventario[nombre]['precio'] = precio
+
+def calcular_valor_inventario(inventario:dict[dict]):
+    keys:list[str]= list(inventario.keys())
+    res:int=0
+    for key in keys:
+        res = res + inventario[key]['precio']*inventario[key]['cantidad']
+    return res
+
+
+
+
+
+
     
