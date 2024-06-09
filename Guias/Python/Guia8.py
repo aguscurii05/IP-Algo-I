@@ -223,29 +223,17 @@ def buscar_el_maximo(p:Pila[int])->int:
     return res
     
 #Ej 11
-"""
+
 def esta_bien_balanceada(s:str)->bool:
-    c:str=''
-    for i in range(0,len(s),1):
-        if s[i]!=' ':
-            c = c+s[i]
-    cont:int=0
-    cont2:int=0
-
-    print(c)
+    for i in range(0,len(s),1): #quito los espacios en blanco
+        if s[i]==' ':
+            s.pop(i)
     op:list[str]=['+','-','*','/']
-    for i in range(0,len(s),1):
-        if c[i] in op:
-            if (c[i-1] in op+['()']) or (c[i-1] in op+['()'])
+    calc=Cola()
+    for i in s:
+        calc.put(i)
         
-    if cont==0:
-        res:bool=True
-    else:
-        res:bool=False
-    return res
-
-print(esta_bien_balanceada("4+6-7+/5"))
- """
+        
  
 #Ej 12
 
