@@ -1,4 +1,4 @@
-import Parcial as p
+import Parcial1 as p
 
 def acomodarTesting():
     a= p.acomodar(["UP"])==["UP"]
