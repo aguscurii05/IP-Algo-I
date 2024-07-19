@@ -1,1 +1,1 @@
-Este es un repositorio de Introduccion a la Programacion/Algoritmos y Estructuras de Datos I con todo lo que fui realizando a lo largo de la cursada. Espero te sea util:)
+Este es un repositorio de Introduccion a la Programacion/Algoritmos y Estructuras de Datos I con todo lo que fui realizando a lo largo de la cursada. Incluye todas las guias con sus resoluciones (desde la 3ra), los pdf teoricos, el Tp Grupal y parciales resueltos.
